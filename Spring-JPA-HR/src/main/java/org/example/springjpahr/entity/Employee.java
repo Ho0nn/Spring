@@ -1,18 +1,25 @@
 package org.example.springjpahr.entity;
 
-import javax.persistence.*;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;  // Use Jakarta Persistence API imports only
 
 @Entity
 public class Employee {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "emp_id")
     private Long id;
-    @Column(name = "emp_name")
+
     private String name;
+
     private Double salary;
 
+    @ManyToOne
+    @JoinColumn(name = "department_id", referencedColumnName = "id")
+   // @JsonIgnore
+    private Department department;
+
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -35,5 +42,13 @@ public class Employee {
 
     public void setSalary(Double salary) {
         this.salary = salary;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 }
